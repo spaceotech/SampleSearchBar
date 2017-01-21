@@ -88,17 +88,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
-        arrFilter = arrCountry.filter({ (text) -> Bool in
-            let tmp: NSString = text
-            let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
-            return range.location != NSNotFound
-        })
-        if(arrFilter.count == 0){
+        if searchText.characters.count == 0 {
             isSearch = false;
+            self.tblSearch.reloadData()
         } else {
-            isSearch = true;
+            arrFilter = arrCountry.filter({ (text) -> Bool in
+                let tmp: NSString = text
+                let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+                return range.location != NSNotFound
+            })
+            if(arrFilter.count == 0){
+                isSearch = false;
+            } else {
+                isSearch = true;
+            }
+            self.tblSearch.reloadData()
         }
-        self.tblSearch.reloadData()
     }
 
 
